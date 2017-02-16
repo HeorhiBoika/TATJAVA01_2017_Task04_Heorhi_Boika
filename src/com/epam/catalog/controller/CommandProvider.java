@@ -14,8 +14,8 @@ public class CommandProvider {
 
     CommandProvider() {
 
-        repository.put(CommandName.CONNECT_TO_DB, new Connect_DB());
-        repository.put(CommandName.CLOSE_CONNECTION, new Close_Connect_DB());
+        repository.put(CommandName.INIT_RESOURCES, new InitResources());
+        repository.put(CommandName.CLOSE_RESOURCES, new CloseResources());
         repository.put(CommandName.ADD_PRODUCT, new AddNewProduct());
         repository.put(CommandName.FIND_BY_TYPE, new FindByType());
         repository.put(CommandName.FIND_BY_NAME, new FindByName());

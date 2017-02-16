@@ -4,22 +4,20 @@ import com.epam.catalog.service.exception.ServiceException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 
 /**
  * Created by PC on 30.01.2017.
  */
 public interface CatalogService {
-    void db_Connection() throws ServiceException;
-
-    void close_Connection() throws ServiceException;
 
     void addNewProduct(String type, String name, String genre) throws ServiceException;
 
-    HashMap getCatalog() throws ServiceException;
+    HashSet getCatalog() throws ServiceException;
 
-    ArrayList findByType(String type) throws ServiceException;
+    HashSet findByType(String type) throws ServiceException;
 
-    ArrayList findByName(String name) throws ServiceException;
+    HashSet findByName(String name) throws ServiceException;
 
-    ArrayList findByGenre(String genre) throws ServiceException;
+    HashSet findByGenre(String genre) throws ServiceException;
 }

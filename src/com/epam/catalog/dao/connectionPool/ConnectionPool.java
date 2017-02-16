@@ -71,6 +71,14 @@ public class ConnectionPool {
     }
 
 
+    public void closeConnection(Statement st) throws DAOException {
+        try {
+            st.close();
+        } catch (SQLException e) {
+            throw new DAOException(e.getMessage(), e);
+        }
+    }
+
     public void closeConnection(Connection con) throws DAOException {
         try {
             con.close();
@@ -92,7 +100,12 @@ public class ConnectionPool {
         }
     }
 
-    public void closeConnection(Statement st) throws DAOException {
+    public void closeConnection(ResultSet rs,PreparedStatement st) throws DAOException {
+        try {
+            rs.close();
+        } catch (SQLException e) {
+            throw new DAOException(e.getMessage(), e);
+        }
         try {
             st.close();
         } catch (SQLException e) {

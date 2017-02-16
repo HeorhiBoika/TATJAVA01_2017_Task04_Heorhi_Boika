@@ -1,5 +1,6 @@
 package com.epam.catalog.controller.impl;
 
+import com.epam.catalog.bean.Catalog;
 import com.epam.catalog.bean.Request;
 import com.epam.catalog.bean.Response;
 import com.epam.catalog.bean.catalog.RequestCatalog;
@@ -10,7 +11,8 @@ import com.epam.catalog.service.CatalogService;
 import com.epam.catalog.service.exception.ServiceException;
 import com.epam.catalog.service.factory.ServiceFactory;
 
-import java.util.ArrayList;
+
+import java.util.HashSet;
 
 /**
  * Created by PC on 31.01.2017.
@@ -22,10 +24,10 @@ public class FindByName implements Command {
         RequestCatalog requestCatalog = (RequestCatalog) request;
         ServiceFactory serviceFactory = ServiceFactory.getInstance();
         CatalogService catalogService = serviceFactory.getCatalogService();
-        ArrayList<String> nameList;
+        HashSet<Catalog> nameList;
         try {
             nameList = catalogService.findByName(requestCatalog.getName());
-            response.setArrayList(nameList);
+            response.setNews(nameList);
             response.setSuccessMessage("Find by name!");
             response.setStatus(1);
         } catch (ServiceException e) {

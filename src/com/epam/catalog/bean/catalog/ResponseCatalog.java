@@ -2,7 +2,7 @@ package com.epam.catalog.bean.catalog;
 
 import com.epam.catalog.bean.Catalog;
 import com.epam.catalog.bean.Response;
-import com.epam.catalog.bean.Type;
+
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -13,32 +13,22 @@ import java.util.HashSet;
  */
 public class ResponseCatalog extends Response {
 
-    private HashMap<Type, HashSet<Catalog>> hashMap;
-    private ArrayList<String> arrayList;
+    private HashSet<Catalog> news;
 
-    public ResponseCatalog(){
-
-    }
-
-    public HashMap<Type, HashSet<Catalog>> getHashMap() {
-
-        return hashMap;
+    public ResponseCatalog() {
 
     }
 
-    public void setHashMap(HashMap<Type, HashSet<Catalog>> hashMap) {
+    public HashSet<Catalog> getNews() {
 
-        this.hashMap = hashMap;
+        return news;
 
     }
 
-    public ArrayList<String> getArrayList() {
+    public void setNews(HashSet<Catalog> news) {
 
-        return arrayList;
+        this.news = news;
+
     }
 
-    public void setArrayList(ArrayList<String> arrayList) {
-
-        this.arrayList = arrayList;
-    }
 }

@@ -1,5 +1,6 @@
 package com.epam.catalog.controller.impl;
 
+import com.epam.catalog.bean.Catalog;
 import com.epam.catalog.bean.Request;
 import com.epam.catalog.bean.Response;
 import com.epam.catalog.bean.catalog.RequestCatalog;
@@ -10,7 +11,8 @@ import com.epam.catalog.service.CatalogService;
 import com.epam.catalog.service.exception.ServiceException;
 import com.epam.catalog.service.factory.ServiceFactory;
 
-import java.util.ArrayList;
+
+import java.util.HashSet;
 
 /**
  * Created by PC on 31.01.2017.
@@ -22,10 +24,10 @@ public class FindByType implements Command {
         RequestCatalog requestCatalog = (RequestCatalog) request;
         ServiceFactory serviceFactory = ServiceFactory.getInstance();
         CatalogService catalogService = serviceFactory.getCatalogService();
-        ArrayList<String> typeList;
+        HashSet<Catalog> typeList;
         try {
             typeList = catalogService.findByType(requestCatalog.getType());
-            response.setArrayList(typeList);
+            response.setNews(typeList);
             response.setSuccessMessage("Find By type!");
             response.setStatus(1);
         } catch (ServiceException e) {

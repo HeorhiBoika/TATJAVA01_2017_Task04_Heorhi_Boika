@@ -1,25 +1,22 @@
 package com.epam.catalog.controller.catalogController;
 
 import com.epam.catalog.bean.Catalog;
-import com.epam.catalog.bean.Type;
 import com.epam.catalog.bean.catalog.RequestCatalog;
 import com.epam.catalog.bean.catalog.ResponseCatalog;
 import com.epam.catalog.controller.Controller;
 import com.epam.catalog.view.Console;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
+
 
 /**
  * Created by PC on 01.02.2017.
  */
 public class CatalogController extends Controller {
 
-    public void connectToDB() {
+    public void initResources() {
         RequestCatalog requestCatalog = new RequestCatalog();
-        requestCatalog.setCommand("CONNECT_TO_DB");
+        requestCatalog.setCommand("INIT_RESOURCES");
         ResponseCatalog responseCatalog = (ResponseCatalog) executeTask(requestCatalog);
         render(responseCatalog);
         if (responseCatalog.getStatus() == 1) {
@@ -28,9 +25,9 @@ public class CatalogController extends Controller {
         }
     }
 
-    public void closeAllConnections() {
+    public void closeResources() {
         RequestCatalog requestCatalog = new RequestCatalog();
-        requestCatalog.setCommand("CLOSE_CONNECTION");
+        requestCatalog.setCommand("CLOSE_RESOURCES");
         executeTask(requestCatalog);
     }
 
@@ -53,7 +50,7 @@ public class CatalogController extends Controller {
         ResponseCatalog responseCatalog = (ResponseCatalog) executeTask(requestCatalog);
         render(responseCatalog);
         if (responseCatalog.getStatus() == 1) {
-            printCatalogByGroup(responseCatalog);
+            printCatalog(responseCatalog);
         }
         Console console = Console.getInstance();
         console.showCatalogAction();
@@ -66,7 +63,7 @@ public class CatalogController extends Controller {
         ResponseCatalog responseCatalog = (ResponseCatalog) executeTask(requestCatalog);
         render(responseCatalog);
         if (responseCatalog.getStatus() == 1) {
-            printCatalogByGroup(responseCatalog);
+            printCatalog(responseCatalog);
         }
         Console console = Console.getInstance();
         console.showCatalogAction();
@@ -79,7 +76,7 @@ public class CatalogController extends Controller {
         ResponseCatalog responseCatalog = (ResponseCatalog) executeTask(requestCatalog);
         render(responseCatalog);
         if (responseCatalog.getStatus() == 1) {
-            printCatalogByGroup(responseCatalog);
+            printCatalog(responseCatalog);
         }
         Console console = Console.getInstance();
         console.showCatalogAction();
@@ -92,30 +89,19 @@ public class CatalogController extends Controller {
         render(responseCatalog);
         if (responseCatalog.getStatus() == 1) {
             printCatalog(responseCatalog);
-            Console console = Console.getInstance();
-            console.showCatalogAction();
         }
+        Console console = Console.getInstance();
+        console.showCatalogAction();
+
     }
 
-    public void printCatalogByGroup(ResponseCatalog responseCatalog) {
-        ArrayList<String> arrayList = responseCatalog.getArrayList();
-        System.out.println("-------------------");
-        for (String string : arrayList) {
-            System.out.println(string);
-        }
-        System.out.println("-------------------");
-    }
 
     public void printCatalog(ResponseCatalog responseCatalog) {
-        HashMap<Type, HashSet<Catalog>> hashMap = responseCatalog.getHashMap();
+        HashSet<Catalog> news = responseCatalog.getNews();
         System.out.println("-------------------");
-        for (Map.Entry<Type, HashSet<Catalog>> entry : hashMap.entrySet()) {
-            HashSet<Catalog> hashSet = entry.getValue();
-            if (hashSet != null) {
-                for (Catalog catalog : hashSet) {
-                    System.out.println(entry.getKey().getType() + "," + catalog.getName() + "," + catalog.getGenre());
-                }
-            }
+        for (Catalog line : news) {
+            System.out.println(line);
+
         }
         System.out.println("-------------------");
     }

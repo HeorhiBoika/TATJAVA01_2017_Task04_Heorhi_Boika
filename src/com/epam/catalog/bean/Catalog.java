@@ -6,8 +6,9 @@ import java.io.Serializable;
 /**
  * Created by PC on 30.01.2017.
  */
-public class Catalog implements Serializable{
+public class Catalog implements Serializable {
 
+    private String type;
     private String name;
     private String genre;
 
@@ -17,9 +18,20 @@ public class Catalog implements Serializable{
 
     }
 
-    public Catalog(String name, String genre) {
+    public Catalog(String type, String name, String genre) {
+        this.type = type;
         this.name = name;
         this.genre = genre;
+    }
+
+    public String getType() {
+
+        return type;
+    }
+
+    public void setType(String type) {
+
+        this.type = type;
     }
 
     public String getName() {
@@ -45,8 +57,9 @@ public class Catalog implements Serializable{
 
     @Override
     public String toString() {
-        return "name='" + name + '\'' +
-                ", genre='" + genre + '\'';
+        return "type = " + type +
+                ", name = " + name +
+                ", genre = " + genre;
     }
 
     @Override
@@ -56,13 +69,15 @@ public class Catalog implements Serializable{
 
         Catalog catalog = (Catalog) o;
 
+        if (type != null ? !type.equals(catalog.type) : catalog.type != null) return false;
         if (name != null ? !name.equals(catalog.name) : catalog.name != null) return false;
         return genre != null ? genre.equals(catalog.genre) : catalog.genre == null;
     }
 
     @Override
     public int hashCode() {
-        int result = name != null ? name.hashCode() : 0;
+        int result = type != null ? type.hashCode() : 0;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (genre != null ? genre.hashCode() : 0);
         return result;
     }

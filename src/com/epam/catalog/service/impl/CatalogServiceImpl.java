@@ -1,7 +1,6 @@
 package com.epam.catalog.service.impl;
 
 import com.epam.catalog.bean.Catalog;
-import com.epam.catalog.bean.Type;
 import com.epam.catalog.dao.DB_ConnectionDAO;
 import com.epam.catalog.dao.NewsDAO;
 import com.epam.catalog.dao.exception.DAOException;
@@ -9,8 +8,7 @@ import com.epam.catalog.dao.factory.DAOFactory;
 import com.epam.catalog.service.CatalogService;
 import com.epam.catalog.service.exception.ServiceException;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.HashSet;
 
 /**
  * Created by PC on 31.01.2017.
@@ -21,36 +19,13 @@ public class CatalogServiceImpl implements CatalogService {
 
     }
 
-
-    @Override
-    public void db_Connection() throws ServiceException {
-        try {
-            DAOFactory daoFactory = DAOFactory.getInstance();
-            DB_ConnectionDAO db_connectionDAO = daoFactory.getDb_connectionDAO();
-            db_connectionDAO.checkConnectionDB();
-        } catch (DAOException e) {
-            throw new ServiceException(e.getMessage(), e);
-        }
-    }
-
-    @Override
-    public void close_Connection() throws ServiceException {
-        try {
-            DAOFactory daoFactory = DAOFactory.getInstance();
-            DB_ConnectionDAO db_connectionDAO = daoFactory.getDb_connectionDAO();
-            db_connectionDAO.closeAllConnections();
-        } catch (DAOException e) {
-            throw new ServiceException(e.getMessage(), e);
-        }
-    }
-
     @Override
     public void addNewProduct(String type, String name, String genre) throws ServiceException {
         if ((type.toLowerCase().equals("фильм")) | (type.toLowerCase().equals("книга")) | (type.toLowerCase().equals("диск"))) {
             try {
                 DAOFactory daoFactory = DAOFactory.getInstance();
                 NewsDAO newsDAO = daoFactory.getProductDAO();
-                newsDAO.addProduct(type, name, genre);
+                newsDAO.addProduct(type.toLowerCase(), name.toLowerCase(), genre.toLowerCase());
             } catch (DAOException e) {
                 throw new ServiceException(e.getMessage(), e);
             }
@@ -60,10 +35,10 @@ public class CatalogServiceImpl implements CatalogService {
     }
 
     @Override
-    public HashMap getCatalog() throws ServiceException {
+    public HashSet getCatalog() throws ServiceException {
         DAOFactory daoFactory = DAOFactory.getInstance();
         NewsDAO newsDAO = daoFactory.getProductDAO();
-        HashMap<Type, ArrayList<Catalog>> catalog;
+        HashSet<Catalog> catalog;
         try {
             catalog = newsDAO.getCatalog();
         } catch (DAOException e) {
@@ -74,12 +49,12 @@ public class CatalogServiceImpl implements CatalogService {
     }
 
     @Override
-    public ArrayList findByGenre(String genre) throws ServiceException {
+    public HashSet findByGenre(String genre) throws ServiceException {
         DAOFactory daoFactory = DAOFactory.getInstance();
         NewsDAO newsDAO = daoFactory.getProductDAO();
-        ArrayList<String> genreList;
+        HashSet<Catalog> genreList;
         try {
-            genreList = newsDAO.findByGenre(genre);
+            genreList = newsDAO.findByGenre(genre.toLowerCase());
         } catch (DAOException e) {
             throw new ServiceException(e.getMessage(), e);
         }
@@ -87,12 +62,12 @@ public class CatalogServiceImpl implements CatalogService {
     }
 
     @Override
-    public ArrayList findByName(String name) throws ServiceException {
+    public HashSet findByName(String name) throws ServiceException {
         DAOFactory daoFactory = DAOFactory.getInstance();
         NewsDAO newsDAO = daoFactory.getProductDAO();
-        ArrayList<String> nameList;
+        HashSet<Catalog> nameList;
         try {
-            nameList = newsDAO.findByName(name);
+            nameList = newsDAO.findByName(name.toLowerCase());
         } catch (DAOException e) {
             throw new ServiceException(e.getMessage(), e);
         }
@@ -100,13 +75,13 @@ public class CatalogServiceImpl implements CatalogService {
     }
 
     @Override
-    public ArrayList findByType(String type) throws ServiceException {
-        ArrayList<String> typeList;
+    public HashSet findByType(String type) throws ServiceException {
+        HashSet<Catalog> typeList;
         if ((type.toLowerCase().equals("фильм")) | (type.toLowerCase().equals("книга")) | (type.toLowerCase().equals("диск"))) {
             DAOFactory daoFactory = DAOFactory.getInstance();
             NewsDAO newsDAO = daoFactory.getProductDAO();
             try {
-                typeList = newsDAO.findByType(type);
+                typeList = newsDAO.findByType(type.toLowerCase());
             } catch (DAOException e) {
                 throw new ServiceException(e.getMessage(), e);
             }

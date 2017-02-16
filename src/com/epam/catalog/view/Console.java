@@ -19,7 +19,7 @@ public class Console {
     }
 
     public void start() {
-        catalogController.connectToDB();
+        catalogController.initResources();
     }
 
     public void showCatalogAction() {
@@ -48,7 +48,7 @@ public class Console {
                         if (request.equals("5")) {
                             showCatalog();
                         } else {
-                            closeConnections();
+                            closeResources();
                             System.out.println("Finish");
                         }
                     }
@@ -104,8 +104,8 @@ public class Console {
         catalogController.findByGenre(genre.trim());
     }
 
-    public void closeConnections(){
-        catalogController.closeAllConnections();
+    public void closeResources(){
+        catalogController.closeResources();
     }
 
     public void showCatalog() {
